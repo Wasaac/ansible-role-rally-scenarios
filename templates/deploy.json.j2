@@ -1,0 +1,18 @@
+{
+  "type": "ExistingCloud",
+  "auth_url": "https://{{ item.value.endpoint }}",
+  "region_name": "RegionOne",
+  "endpoint_type": "public",
+  "admin": {
+    "username": "{{ item.value.adminuser }}",
+    "password": "{{ item.value.adminpassword }}",
+    "tenant_name": "{{ item.value.admintenantname }}"
+  },
+  "users": [
+    {
+      "username": "{{ item.value.username }}",
+      "password": "{{ item.value.userpassword }}",
+      "tenant_name": "{{ item.value.usertenantname }}"
+    }
+  ]
+}

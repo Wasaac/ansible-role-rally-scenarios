@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: CSC - IT Center for Science
+  description: Deploy OpenStack Rally scenarios
+  company: CSC - IT Center for Science Ltd.
+  license: MIT
+  min_ansible_version: 2.2
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  galaxy_tags:
+    - OpenStack
+    - testing
+dependencies: []

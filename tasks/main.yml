@@ -1,0 +1,17 @@
+---
+
+- name: Create directories for deployments
+  file: path={{ item.key }} owner=rally group=rally mode=0750 state=directory
+  with_dict: "{{ clouds }}"
+  when: deploy
+
+- name: Create deployment files
+  template: src=deploy.json.j2 dest={{ item.key }}deploy.json owner=rally group=rally mode=0760
+  with_dict: "{{ clouds }}"
+  when: deploy
+
+- name: Create deployments
+  sudo_user: rally
+  shell: source /home/rally/rally/bin/activate && rally deployment create --file {{ item.key }}/deploy.json --name {{ item.value.cloudname }} && deactivate
+  with_dict: "{{ clouds }}"
+  when: deploy

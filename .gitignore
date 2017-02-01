@@ -1,0 +1,7 @@
+*.retry
+*.swp
+*.swo
+roles/ansible-role-*
+playbooks/credentials/
+credentials/
+vars/

@@ -1,0 +1,22 @@
+---
+# Example to deploy two clouds, set deploy to true and configure
+deploy: True
+clouds:
+  /home/rally/test/:
+    cloudname: testcloud
+    endpoint: testcloud.fi:5000/v2.0/
+    adminuser: admin
+    adminpassword: adminpw
+    admintenantname: admintenant
+    username: user
+    userpassword: userpw
+    usertenantname: usertenant
+  /home/rally/production/:
+    cloudname: prodcloud
+    endpoint: prodcloud.fi:5000/v2.0/
+    adminuser: admin
+    adminpassword: adminpw
+    admintenantname: admintenant
+    username: user
+    userpassword: userpw
+    usertenantname: usertenant

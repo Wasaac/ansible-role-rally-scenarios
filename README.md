@@ -1,1 +1,3 @@
-# ansible-role-rally-scenarios
+# Ansible Role Rally Scenarios
+
+Deploy the variables under vars directory before running
