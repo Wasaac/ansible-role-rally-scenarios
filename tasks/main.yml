@@ -1,17 +1,25 @@
 ---
+- name: Check existing deployments
+  shell: source /home/rally/rally/bin/activate && rally deployment list && deactivate
+  register: deployments
 
 - name: Create directories for deployments
-  file: path={{ item.key }} owner=rally group=rally mode=0750 state=directory
+  file: path=/home/rally/{{ item.key }} owner=rally group=rally mode=0750 state=directory
   with_dict: "{{ clouds }}"
-  when: deploy
+  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
 
 - name: Create deployment files
-  template: src=deploy.json.j2 dest={{ item.key }}deploy.json owner=rally group=rally mode=0760
+  template: src=deploy.json.j2 dest=/home/rally/{{ item.key }}/deploy.json owner=rally group=rally mode=0760
   with_dict: "{{ clouds }}"
-  when: deploy
+  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
 
 - name: Create deployments
   sudo_user: rally
-  shell: source /home/rally/rally/bin/activate && rally deployment create --file {{ item.key }}/deploy.json --name {{ item.value.cloudname }} && deactivate
+  shell: source /home/rally/rally/bin/activate && rally deployment create --file /home/rally/{{ item.key }}/deploy.json --name {{ item.key }} && deactivate
   with_dict: "{{ clouds }}"
-  when: deploy
+  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+
+- name: Remove deployment directories
+  file: path=/home/rally/{{ item.key }} state=absent
+  with_dict: "{{ clouds }}"
+  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
