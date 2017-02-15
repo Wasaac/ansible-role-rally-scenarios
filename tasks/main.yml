@@ -23,3 +23,6 @@
   file: path=/home/rally/{{ item.key }} state=absent
   with_dict: "{{ clouds }}"
   when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+
+- include: jobs.yml
+

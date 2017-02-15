@@ -17,3 +17,54 @@ clouds:
     username: user
     userpassword: userpw
     usertenantname: usertenant
+
+jobs:
+  test1:
+    name: testcloud
+    task: boot_runcommand_delete_custom_image
+    flavor: standard.tiny
+    image: Fedora-x86_64-20-20140618-sda
+  test2:
+    name: testcloud
+    task: create_and_delete_servers
+    flavor: standard.tiny
+    image: Ubuntu-15.04
+    nicassign: true
+    forcedelete: false
+    times: 10
+    concurrency: 2
+  test3:
+    name: testcloud
+    task: create_and_delete_volume
+    size: 10
+    times: 1
+    concurrency: 1
+    min: 5
+    max: 20
+    times2: 10
+    concurrency2: 5
+  prod1:
+    name: prodcloud
+    task: boot_runcommand_delete_custom_image
+    flavor: standard.tiny
+    image: Fedora-x86_64-20-20140618-sda
+  prod2:
+    name: prodcloud
+    task: create_and_delete_servers
+    flavor: standard.tiny
+    image: Ubuntu-15.04
+    nicassign: true
+    forcedelete: false
+    times: 10
+    concurrency: 2
+  prod3:
+    name: prodcloud
+    task: create_and_delete_volume
+    size: 10
+    times: 1
+    concurrency: 1
+    min: 5
+    max: 20
+    times2: 10
+    concurrency2: 5
+

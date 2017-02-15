@@ -1,0 +1,30 @@
+{
+    "CinderVolumes.create_and_delete_volume": [
+        {
+            "args": {
+                "size": {{ item.value.size }}
+            },
+            "runner": {
+                "type": "constant",
+                "times": {{ item.value.times }},
+                "concurrency": {{ item.value.concurrency }}
+            },
+            "context" {
+            }
+        },
+        {
+            "args": {
+                "size": {
+                    "min": {{ item.value.min }},
+                    "max": {{ item.value.max }}
+                }
+            },
+            "runner": {
+                "type": "constant",
+                "times": {{ item.value.times2 }},
+                "concurrency": "{{ item.value.concurrency2 }}"
+            },
+            "context" {}
+        }
+    ]
+}
