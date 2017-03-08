@@ -5,18 +5,26 @@ clouds:
     endpoint: testcloud.fi:5000/v2.0/
     adminuser: admin
     adminpassword: adminpw
-    admintenantname: admintenant
+    admin_tenant_name: admintenant
+    admin_user_domain: default
+    admin_project_domain: default
     username: user
     userpassword: userpw
-    usertenantname: usertenant
+    user_tenant_name: usertenant
+    user_domain_name: default
+    user_project_domain_name: default
   prodcloud:
     endpoint: prodcloud.fi:5000/v2.0/
     adminuser: admin
     adminpassword: adminpw
-    admintenantname: admintenant
+    admin_tenant_name: admintenant
+    admin_user_domain: default
+    admin_project_domain: default
     username: user
     userpassword: userpw
-    usertenantname: usertenant
+    user_tenant_name: usertenant
+    user_domain_name: default
+    user_project_domain_name: default
 
 jobs:
   test1:

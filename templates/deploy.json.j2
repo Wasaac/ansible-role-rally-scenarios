@@ -6,13 +6,17 @@
   "admin": {
     "username": "{{ item.value.adminuser }}",
     "password": "{{ item.value.adminpassword }}",
-    "tenant_name": "{{ item.value.admintenantname }}"
+    "tenant_name": "{{ item.value.admin_tenant_name }}",
+    "user_domain_name": "{{ item.value.admin_domain_name }}",
+    "project_domain_name": "{{ item.value.admin_project_domain_name }}"
   },
   "users": [
     {
       "username": "{{ item.value.username }}",
       "password": "{{ item.value.userpassword }}",
-      "tenant_name": "{{ item.value.usertenantname }}"
+      "tenant_name": "{{ item.value.user_tenant_name }}",
+      "user_domain_name": "{{ item.value.user_domain_name }}",
+      "project_domain_name": "{{ item.value.user_project_domain_name }}"
     }
   ]
 }
