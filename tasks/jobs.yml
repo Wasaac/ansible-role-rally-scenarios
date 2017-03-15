@@ -5,7 +5,7 @@
   with_dict: "{{ clouds }}"
 
 - name: Create tasks
-  template: src={{ item.value.task }}.json.j2 dest=/home/rally/tasks/{{ item.value.name }}/{{ item.value.task }}.json owner=rally group=rally mode=0700
+  template: src={{ item.value.task }}.yaml.j2 dest=/home/rally/tasks/{{ item.value.name }}/{{ item.value.task }}.yaml owner=rally group=rally mode=0700
   with_dict: "{{ jobs }}"
 
 - name: Create cron job to run tasks
