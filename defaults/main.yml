@@ -27,6 +27,8 @@ clouds:
     user_project_domain_name: default
 
 configure_tempest: true
+rally_test_flavor: m1.tiny
+rally_second_test_flavor: m1.small
 tempest_ipv6_support: False
 tempest_ca_path: "/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt"
 # Which tempest tests to skip

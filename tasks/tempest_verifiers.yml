@@ -28,10 +28,15 @@
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ rally_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: flavor_id
 
+  - name: Check for flavor
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ rally_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    register: second_flavor_id
+
   - name: Set facts
     set_fact:
       rally_cirros_image_uuid: "{{ image_id.stdout }}"
       rally_flavor_uuid: "{{ flavor_id.stdout }}"
+      rally_second_flavor_uuid: "{{ second_flavor_id.stdout }}"
       rally_network_name: "{{ item.value.network_name }}"
 
   - name: Create config template
@@ -45,3 +50,8 @@
     http_proxy: ""
     https_proxy: ""
 
+- name: Create skip list
+  template: src=tempest_skip_list.yml.j2 dest=/home/rally//{{ item.key }}-skip-list.yml owner=rally group=rally mode=0600
+
+- name: Create run bash script
+  template: src=tempest_run.sh.j2 dest=/home/rally//{{ item.key }}-tempest_run.sh owner=rally group=rally mode=0700

@@ -1,0 +1,10 @@
+#!/bin/bash
+# We want any image fetches to use the possibl proxy, but all OpenStack
+# communication should not use the proxy 
+export http_proxy={{ proxy_env["http_proxy"] }}
+unset https_proxy
+
+source /home/rally/rally/bin/activate
+rally deployment use {{ item.key }}
+rally verify use-verifier --id {{ item.key }}
+rally verify start --skip-list {{ item.key }}-skip-list.yml --detailed
