@@ -1,24 +1,27 @@
 {
   "type": "ExistingCloud",
-  "auth_url": "https://{{ item.value.endpoint }}",
-  "region_name": "{{ item.value.region }}",
-  "endpoint_type": "public",
-  "admin": {
-    "username": "{{ item.value.adminuser }}",
-    "password": "{{ item.value.adminpassword }}",
-    "project_name": "{{ item.value.admin_project_name }}",
-    "domain_name": "{{ item.value.admin_domain_name }}",
-    "user_domain_name": "{{ item.value.admin_domain_name }}",
-    "project_domain_name": "{{ item.value.admin_project_domain_name }}"
-  },
-  "users": [
-    {
-      "username": "{{ item.value.username }}",
-      "password": "{{ item.value.userpassword }}",
-      "project_name": "{{ item.value.user_project_name }}",
-      "domain_name": "{{ item.value.user_domain_name }}",
-      "user_domain_name": "{{ item.value.user_domain_name }}",
-      "project_domain_name": "{{ item.value.user_project_domain_name }}"
+  "creds": {
+    "openstack": {
+    "auth_url": "https://{{ item.value.endpoint }}",
+    "region_name": "{{ item.value.region }}",
+    "endpoint_type": "public",
+    "admin": {
+      "username": "{{ item.value.adminuser }}",
+      "password": "{{ item.value.adminpassword }}",
+      "project_name": "{{ item.value.admin_project_name }}",
+      "user_domain_name": "{{ item.value.admin_domain_name }}",
+      "project_domain_name": "{{ item.value.admin_project_domain_name }}"
+    },
+    "users": [
+      {
+        "username": "{{ item.value.username }}",
+        "password": "{{ item.value.userpassword }}",
+        "project_name": "{{ item.value.user_project_name }}",
+        "domain_name": "{{ item.value.user_domain_name }}",
+        "user_domain_name": "{{ item.value.user_domain_name }}",
+        "project_domain_name": "{{ item.value.user_project_domain_name }}"
+      }
+      ]
     }
-  ]
+  }
 }

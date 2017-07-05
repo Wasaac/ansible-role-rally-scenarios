@@ -1,0 +1,24 @@
+[DEFAULT]
+swift_operator_role = member
+swift_reseller_admin_role = admin
+
+[compute]
+image_ref = {{ rally_cirros_image_uuid }}
+image_ref_alt = {{ rally_cirros_image_uuid }}
+flavor_ref = {{ rally_flavor_uuid }}
+flavor_ref_alt = {{ rally_flavor_uuid }}
+fixed_network_name = {{ rally_network_name }}
+
+[object-storage]
+swift_operator_role = member
+swift_reseller_admin_role = admin
+
+[volume]
+volume_size = 10
+
+[network-feature-enabled]
+ipv6_subnet_attributes = False
+ipv6 = False
+
+[identity]
+ca_certificates_file = {{ tempest_ca_path }}
