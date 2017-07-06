@@ -25,19 +25,19 @@
     register: image_id
 
   - name: Check for flavor
-    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ rally_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: flavor_id
 
   - name: Check for flavor
-    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ rally_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: second_flavor_id
 
   - name: Set facts
     set_fact:
-      rally_cirros_image_uuid: "{{ image_id.stdout }}"
-      rally_flavor_uuid: "{{ flavor_id.stdout }}"
-      rally_second_flavor_uuid: "{{ second_flavor_id.stdout }}"
-      rally_network_name: "{{ item.value.network_name }}"
+      tempest_cirros_image_uuid: "{{ image_id.stdout }}"
+      tempest_flavor_uuid: "{{ flavor_id.stdout }}"
+      tempest_second_flavor_uuid: "{{ second_flavor_id.stdout }}"
+      tempest_network_name: "{{ item.value.network_name }}"
 
   - name: Create config template
     template: src=tempest.j2 dest=/tmp/{{ item.key }}.tempest owner=rally group=rally mode=0700

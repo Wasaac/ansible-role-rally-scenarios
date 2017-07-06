@@ -12,7 +12,7 @@ You can find an example of all the varibles the role uses under defaults/main.ym
 
 ## Usage
 
-<code>
+```
 ---
 - name: Configure rally
   hosts: rally_server
@@ -21,4 +21,4 @@ You can find an example of all the varibles the role uses under defaults/main.ym
     - ansible-role-rally
     - ansible-role-rally-scenarios
   environment: "{{ proxy_env }}"
-</code>
+```

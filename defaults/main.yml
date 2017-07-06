@@ -33,10 +33,21 @@ clouds: {}
 #    user_project_domain_name: Default
 #    network_name: netowork_name_for_tempest
 
+# These settings are used if they are set. Your server might need to go through
+# a proxy server to reach the relevant packages etc. 
+#proxy_env:
+# http_proxy: proxy_server_address:port
+# https_proxy: proxy_server_address_port
+
 configure_tempest: true
-rally_test_flavor: m1.tiny
-rally_second_test_flavor: m1.small
+
+# Tempest uses two flavors for testing
+tempest_test_flavor: m1.tiny
+tempest_second_test_flavor: m1.small
+
 tempest_ipv6_support: False
+
+# For some reason this is empty if not explicity set
 tempest_ca_path: "/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt"
 # Which tempest tests to skip
 tempest_skip_tests: {}
