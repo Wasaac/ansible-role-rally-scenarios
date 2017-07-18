@@ -1,5 +1,5 @@
 #!/bin/bash
-# We want any image fetches to use the possibl proxy, but all OpenStack
+# We want any image fetches to use the possible proxy, but all OpenStack
 # communication should not use the proxy 
 export http_proxy={{ proxy_env["http_proxy"] | default('') }}
 unset https_proxy
