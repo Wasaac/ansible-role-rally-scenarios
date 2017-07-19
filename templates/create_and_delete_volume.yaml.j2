@@ -1,14 +1,12 @@
 ---
   CinderVolumes.create_and_delete_volume:
-    -
-      args:
+    - args:
         size: {{ item.value.size }}
       runner:
         type: "constant"
         times: {{ item.value.times }}
         concurrency: {{ item.value.concurrency }}
-    -
-      args:
+    - args:
         size:
           min: {{ item.value.min }}
           max: {{ item.value.max }}

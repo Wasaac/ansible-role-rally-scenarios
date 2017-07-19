@@ -1,0 +1,57 @@
+---
+- name: Check existing verifiers
+  sudo_user: rally
+  shell: source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify list-verifiers | grep -v WARNING && deactivate
+  register: verifiers
+
+- name: Create verifier
+  sudo_user: rally
+  shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify create-verifier --type tempest --name {{ item.key }}  && deactivate"
+  when: item.key not in "{{ verifiers.stdout.split('|') | default([]) }}"
+
+- block:
+  - name: Check for images
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros && deactivate"
+    register: existing_images
+    failed_when: existing_images.rc  > 1
+
+    # Can't use os_image since we need to source the rally deployment
+  - name: Upload cirros image
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-create --name cirros --visibility public --file /tmp/cirros-0.3.5-x86_64-disk.img --container-format bare --disk-format qcow2 && deactivate"
+    when: existing_images.rc == 1
+
+  - name: Get image id
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    register: image_id
+
+  - name: Check for flavor
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    register: flavor_id
+
+  - name: Check for flavor
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    register: second_flavor_id
+
+  - name: Set facts
+    set_fact:
+      tempest_cirros_image_uuid: "{{ image_id.stdout }}"
+      tempest_flavor_uuid: "{{ flavor_id.stdout }}"
+      tempest_second_flavor_uuid: "{{ second_flavor_id.stdout }}"
+      tempest_network_name: "{{ item.value.network_name }}"
+
+  - name: Create config template
+    template: src=tempest.j2 dest=/tmp/{{ item.key }}.tempest owner=rally group=rally mode=0700
+
+  - name: Configure verifier
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify use-verifier --id {{ item.key }} &&  rally verify configure-verifier --extend /tmp/{{ item.key }}.tempest && deactivate"
+
+  environment:
+    ftp_proxy: ""
+    http_proxy: ""
+    https_proxy: ""
+
+- name: Create skip list
+  template: src=tempest_skip_list.yml.j2 dest=/home/rally//{{ item.key }}-skip-list.yml owner=rally group=rally mode=0600
+
+- name: Create run bash script
+  template: src=tempest_run.sh.j2 dest=/home/rally//{{ item.key }}-tempest_run.sh owner=rally group=rally mode=0700

@@ -1,13 +1,16 @@
 ---
   NovaServers.boot_and_delete_server:
-    args:
-      flavor:
-        name: "{{ item.value.flavor }}"
-      image:
-        name: "{{ item.value.image }}"
-      auto_assign_nic: {{ item.value.nicassign }}
-      force_delete: {{ item.value.forcedelete }}
-    runner:
-      type: "constant"
-      times: {{ item.value.times }}
-      concurrency: {{ item.value.concurrency }}
+    - args:
+        flavor:
+          name: "{{ item.value.flavor }}"
+        image:
+          name: "{{ item.value.image }}"
+        auto_assign_nic: {{ item.value.nicassign }}
+{% if item.value.nicassign != true %}
+        nics: [{net-id: "{{ item.value.netid }}"}]
+{% endif %}
+        force_delete: {{ item.value.forcedelete }}
+      runner:
+        type: "constant"
+        times: {{ item.value.times }}
+        concurrency: {{ item.value.concurrency }}
