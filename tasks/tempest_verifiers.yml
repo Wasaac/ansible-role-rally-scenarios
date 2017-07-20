@@ -45,6 +45,7 @@
   - name: Configure verifier
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify use-verifier --id {{ item.key }} &&  rally verify configure-verifier --extend /tmp/{{ item.key }}.tempest && deactivate"
 
+  sudo_user: rally
   environment:
     ftp_proxy: ""
     http_proxy: ""
