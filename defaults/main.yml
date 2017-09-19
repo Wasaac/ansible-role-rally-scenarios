@@ -1,7 +1,7 @@
 ---
 clouds: {}
 # Configuration for each cloud which will be set up. A rally "deployment" is
-# aet up for each coffigured cloud. If configure_tempest: True, a tempest
+# set up for each configured cloud. If configure_tempest: True, a tempest
 # verifier is configured for these too.
 #clouds:
 #  testcloud:
