@@ -3,34 +3,48 @@
   sudo_user: rally
   shell: source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify list-verifiers | grep -v WARNING && deactivate
   register: verifiers
+  args:
+    executable: /bin/bash
 
 - name: Create verifier
   sudo_user: rally
   shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify create-verifier --type tempest --name {{ item.key }}  && deactivate"
   when: item.key not in "{{ verifiers.stdout.split('|') | default([]) }}"
+  args:
+    executable: /bin/bash
 
 - block:
   - name: Check for images
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros && deactivate"
     register: existing_images
     failed_when: existing_images.rc  > 1
+    args:
+      executable: /bin/bash
 
     # Can't use os_image since we need to source the rally deployment
   - name: Upload cirros image
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-create --name cirros --visibility public --file /tmp/cirros-0.3.5-x86_64-disk.img --container-format bare --disk-format qcow2 && deactivate"
     when: existing_images.rc == 1
+    args:
+      executable: /bin/bash
 
   - name: Get image id
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: image_id
+    args:
+      executable: /bin/bash
 
   - name: Check for flavor
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: flavor_id
+    args:
+      executable: /bin/bash
 
   - name: Check for flavor
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: second_flavor_id
+    args:
+      executable: /bin/bash
 
   - name: Set facts
     set_fact:
@@ -44,6 +58,8 @@
 
   - name: Configure verifier
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify use-verifier --id {{ item.key }} &&  rally verify configure-verifier --extend /tmp/{{ item.key }}.tempest && deactivate"
+    args:
+      executable: /bin/bash
 
   sudo_user: rally
   environment:
