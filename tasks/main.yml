@@ -2,6 +2,8 @@
 - name: Check existing deployments
   shell: source /home/rally/rally/bin/activate && rally deployment list && deactivate
   register: deployments
+  args:
+    executable: /bin/bash
 
 - name: Create directories for deployments
   file: path=/home/rally/{{ item.key }} owner=rally group=rally mode=0750 state=directory
@@ -18,6 +20,8 @@
   shell: source /home/rally/rally/bin/activate && rally deployment create --file /home/rally/{{ item.key }}/deploy.json --name {{ item.key }} && deactivate
   with_dict: "{{ clouds }}"
   when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+  args:
+    executable: /bin/bash
 
 - name: Remove deployment directories
   file: path=/home/rally/{{ item.key }} state=absent
