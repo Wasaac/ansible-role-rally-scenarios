@@ -16,7 +16,7 @@
   when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
 
 - name: Create deployments
-  sudo_user: rally
+  become_user: rally
   shell: source /home/rally/rally/bin/activate && rally deployment create --file /home/rally/{{ item.key }}/deploy.json --name {{ item.key }} && deactivate
   with_dict: "{{ clouds }}"
   when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
