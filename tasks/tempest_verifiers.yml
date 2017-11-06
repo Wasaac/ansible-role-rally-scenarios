@@ -69,6 +69,7 @@
 
 - name: Create skip list
   template: src=tempest_skip_list.yml.j2 dest=/home/rally//{{ item.key }}-skip-list.yml owner=rally group=rally mode=0600
+  tags: rally_skip_list
 
 - name: Create run bash script
   template: src=tempest_run.sh.j2 dest=/home/rally//{{ item.key }}-tempest_run.sh owner=rally group=rally mode=0700
