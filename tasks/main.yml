@@ -8,25 +8,25 @@
 - name: Create directories for deployments
   file: path=/home/rally/{{ item.key }} owner=rally group=rally mode=0750 state=directory
   with_dict: "{{ clouds }}"
-  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+  when: item.key not in deployments.stdout | default([])
 
 - name: Create deployment files
   template: src=deploy.json.j2 dest=/home/rally/{{ item.key }}/deploy.json owner=rally group=rally mode=0760
   with_dict: "{{ clouds }}"
-  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+  when: item.key not in deployments.stdout | default([])
 
 - name: Create deployments
   become_user: rally
   shell: source /home/rally/rally/bin/activate && rally deployment create --file /home/rally/{{ item.key }}/deploy.json --name {{ item.key }} && deactivate
   with_dict: "{{ clouds }}"
-  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+  when: item.key not in deployments.stdout | default([])
   args:
     executable: /bin/bash
 
 - name: Remove deployment directories
   file: path=/home/rally/{{ item.key }} state=absent
   with_dict: "{{ clouds }}"
-  when: item.key not in "{{ deployments.stdout.split('|') | default([]) }}"
+  when: item.key not in deployments.stdout | default([])
 
-- include: tempest.yml
+- import_tasks: tempest.yml
   when: configure_tempest
