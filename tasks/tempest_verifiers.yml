@@ -1,7 +1,7 @@
 ---
 - name: Check existing verifiers
   become_user: rally
-  shell: source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify list-verifiers | grep -v WARNING && deactivate
+  shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify list-verifiers | grep -v WARNING && deactivate"
   register: verifiers
   args:
     executable: /bin/bash
@@ -9,7 +9,7 @@
 - name: Create verifier
   become_user: rally
   shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify create-verifier --type tempest --name {{ item.key }} --source {{ tempest_source }} --version {{ tempest_version }}  && deactivate"
-  when: item.key not in "{{ verifiers.stdout.split('|') | default([]) }}"
+  when: item.key not in verifiers.stdout | default([])
   args:
     executable: /bin/bash
 
