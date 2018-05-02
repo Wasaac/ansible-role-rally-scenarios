@@ -1,4 +1,9 @@
 ---
+- name: Check if tempest_skip_tests is not defined
+  assert:
+    that: tempest_skip_tests is not defined
+    msg: "Note the global tempest_skip_tests variable has now been moved to a per cloud env variable"
+
 - name: Check existing deployments
   shell: source /home/rally/rally/bin/activate && rally deployment list && deactivate
   register: deployments
