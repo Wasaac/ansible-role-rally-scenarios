@@ -3,6 +3,7 @@ clouds: {}
 # Configuration for each cloud which will be set up. A rally "deployment" is
 # set up for each configured cloud. If configure_tempest: True, a tempest
 # verifier is configured for these too.
+#
 #clouds:
 #  testcloud:
 #    region: region1
@@ -17,7 +18,16 @@ clouds: {}
 #    user_project_name: userproject
 #    user_domain_name: Default
 #    user_project_domain_name: Default
-#    network_name: netowork_name_for_tempest
+#    network_name: network_name_for_tempest
+#    tempest_skip_tests: {}
+# Which tempest tests to skip
+# Moving this under the clouds dictionary so you can have a skip test
+# per env, as Dev and Test may not have the same amount of hardware to
+# run some of the tempest tests against as in a Prod.
+# Example: skip a single test
+#     tempest_skip_tests: { tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,volume]: "Disabled due to reasons" }
+
+#
 #  prodcloud:
 #    region: region1
 #    endpoint: prodcloud.fi:5000/v2.0/
@@ -32,6 +42,13 @@ clouds: {}
 #    user_domain_name: Default
 #    user_project_domain_name: Default
 #    network_name: netowork_name_for_tempest
+#    tempest_skip_tests: {}
+# Which tempest tests to skip
+# Moving this under the clouds dictionary so you can have a skip test
+# per env, as Dev and Test may not have the same amount of hardware to
+# run some of the tempest tests against as in a Prod.
+# Example: skip a single test
+#     tempest_skip_tests: { tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,volume]: "Disabled due to reasons" }
 
 # These settings are used if they are set. Your server might need to go through
 # a proxy server to reach the relevant packages etc. 
@@ -45,6 +62,9 @@ configure_tempest: true
 tempest_source: https://git.openstack.org/openstack/tempest
 tempest_version: master
 
+# Tempest Openstack Roles
+rally_tempest_swift_operator_role: member
+rally_tempest_swift_reseller_admin_role: admin
 
 # Tempest uses two flavors for testing
 tempest_test_flavor: m1.tiny
@@ -54,10 +74,15 @@ tempest_ipv6_support: False
 
 # For some reason this is empty if not explicity set
 tempest_ca_path: "/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt"
-# Which tempest tests to skip
-tempest_skip_tests: {}
-# Example: skip a single test
-# tempest_skip_tests: { tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,volume]: "Disabled due to reasons" }
+
+# If using a Ceph RadosGW backend discoverability is not supported in
+# the Jewel and earlier releases It is on by default when using swift
+# and the tempest tests will fail if not set
+# https://github.com/ceph/ceph/pull/17967 has some useful options for
+# Tempest and RadosGW settings
+# Unset this value if you have only a Ceph RadosGW backend or override
+# it with a group_var set to "False"
+#rally_tempest_swift_discoverability: "False"
 
 # Set to True for the bash script to exit if we are not in a screen
 tempest_must_be_run_in_screen: False
