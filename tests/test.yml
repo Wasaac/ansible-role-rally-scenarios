@@ -8,6 +8,11 @@
      - vault_prod_adminpw: "{{ vault_test_adminpw }}"
      - vault_test_userpw: "{{ vault_test_adminpw }}"
      - vault_prod_userpw: "{{ vault_test_adminpw }}"
+     - rally_tempest_floating_ips: False
+     - rally_tempest_extra_settings:
+       - "mysetting = False"
+       - "[section1]"
+       - "setting2 = True"
      - clouds:
         testcloud:
           region: region1

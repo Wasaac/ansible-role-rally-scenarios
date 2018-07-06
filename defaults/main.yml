@@ -84,5 +84,15 @@ tempest_ca_path: "/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt"
 # it with a group_var set to "False"
 #rally_tempest_swift_discoverability: "False"
 
+# Optionally disable floating IP verifiers by setting this to False
+#rally_tempest_floating_ips: False
+
 # Set to True for the bash script to exit if we are not in a screen
 tempest_must_be_run_in_screen: False
+
+# A way to add more settings:
+#rally_tempest_extra_settings:
+# - "mysetting = False"
+# - "[section1]"
+# - "setting2 = True"
+
