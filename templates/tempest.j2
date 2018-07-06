@@ -24,6 +24,16 @@ volume_size = 10
 [network-feature-enabled]
 ipv6_subnet_attributes = False
 ipv6 = False
+{% if rally_tempest_floating_ips is defined %}
+floating_ips = {{ rally_tempest_floating_ips }}
+{% endif %}
 
 [identity]
 ca_certificates_file = {{ tempest_ca_path }}
+
+{% if rally_tempest_extra_settings is defined %}
+# Extra tempest.conf settings
+{% for param in rally_tempest_extra_settings %}
+{{ param }}
+{% endfor %}
+{% endif %}
