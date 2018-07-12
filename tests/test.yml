@@ -28,6 +28,8 @@
           user_domain_name: Default
           user_project_domain_name: Default
           network_name: netowork_name_for_tempest
+          tempest_extra_settings: "{{ rally_tempest_extra_settings }}"
+          tempest_skip_tests: {}
         prodcloud:
           region: region1
           endpoint: prodcloud.fi:5000/v2.0/
@@ -42,6 +44,8 @@
           user_domain_name: Default
           user_project_domain_name: Default
           network_name: netowork_name_for_tempest
+          tempest_extra_settings: []
+          tempest_skip_tests: {}
 
    roles:
      - ansible-role-rally

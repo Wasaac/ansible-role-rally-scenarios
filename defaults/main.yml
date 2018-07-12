@@ -19,6 +19,7 @@ clouds: {}
 #    user_domain_name: Default
 #    user_project_domain_name: Default
 #    network_name: network_name_for_tempest
+#    tempest_extra_settings: []
 #    tempest_skip_tests: {}
 # Which tempest tests to skip
 # Moving this under the clouds dictionary so you can have a skip test
@@ -42,6 +43,7 @@ clouds: {}
 #    user_domain_name: Default
 #    user_project_domain_name: Default
 #    network_name: netowork_name_for_tempest
+#    tempest_extra_settings: "{{ rally_tempest_extra_settings }}"
 #    tempest_skip_tests: {}
 # Which tempest tests to skip
 # Moving this under the clouds dictionary so you can have a skip test

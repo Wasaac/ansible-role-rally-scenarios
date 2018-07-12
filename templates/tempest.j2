@@ -31,9 +31,9 @@ floating_ips = {{ rally_tempest_floating_ips }}
 [identity]
 ca_certificates_file = {{ tempest_ca_path }}
 
-{% if rally_tempest_extra_settings is defined %}
+{% if item.value.tempest_extra_settings is defined %}
 # Extra tempest.conf settings
-{% for param in rally_tempest_extra_settings %}
+{% for param in item.value.tempest_extra_settings %}
 {{ param }}
 {% endfor %}
 {% endif %}
