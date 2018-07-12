@@ -3,6 +3,7 @@
   become_user: rally
   shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify list-verifiers | grep -v WARNING && deactivate"
   register: verifiers
+  changed_when: False
   args:
     executable: /bin/bash
 
@@ -18,6 +19,7 @@
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros && deactivate"
     register: existing_images
     failed_when: existing_images.rc  > 1
+    changed_when: False
     args:
       executable: /bin/bash
 
@@ -31,18 +33,21 @@
   - name: Get image id
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: image_id
+    changed_when: False
     args:
       executable: /bin/bash
 
   - name: Check for test flavor
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: flavor_id
+    changed_when: False
     args:
       executable: /bin/bash
 
   - name: Check for second test flavor
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: second_flavor_id
+    changed_when: False
     args:
       executable: /bin/bash
 
@@ -61,14 +66,14 @@
     args:
       executable: /bin/bash
 
+  - name: Create skip list
+    template: src=tempest_skip_list.yml.j2 dest=/home/rally//{{ item.key }}-skip-list.yml owner=rally group=rally mode=0600
+
+  - name: Create run bash script
+    template: src=tempest_run.sh.j2 dest=/home/rally//{{ item.key }}-tempest_run.sh owner=rally group=rally mode=0700
+
   become_user: rally
   environment:
     ftp_proxy: ""
     http_proxy: ""
     https_proxy: ""
-
-- name: Create skip list
-  template: src=tempest_skip_list.yml.j2 dest=/home/rally//{{ item.key }}-skip-list.yml owner=rally group=rally mode=0600
-
-- name: Create run bash script
-  template: src=tempest_run.sh.j2 dest=/home/rally//{{ item.key }}-tempest_run.sh owner=rally group=rally mode=0700
