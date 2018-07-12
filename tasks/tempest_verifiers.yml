@@ -34,13 +34,13 @@
     args:
       executable: /bin/bash
 
-  - name: Check for flavor
+  - name: Check for test flavor
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: flavor_id
     args:
       executable: /bin/bash
 
-  - name: Check for flavor
+  - name: Check for second test flavor
     shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && nova flavor-list  |grep {{ tempest_second_test_flavor }} | cut -f 2 -d  '|' | head -n 1 && deactivate"
     register: second_flavor_id
     args:
