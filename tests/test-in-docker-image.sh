@@ -119,8 +119,8 @@ function test_playbook(){
 }
 function extra_tests(){
 
-    echo "TEST: tree /home/rally"
-    tree /home/rally
+    echo "TEST: ls -la /home/rally"
+    ls -la /home/rally
 }
 
 
