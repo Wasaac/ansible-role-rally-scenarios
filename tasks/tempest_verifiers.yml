@@ -1,4 +1,9 @@
 ---
+
+- name: "We are now configuring {{ item.key }}"
+  debug:
+    msg: "We are now configuring {{ item.key }}"
+
 - name: Check existing rally verifiers
   become_user: rally
   shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify list-verifiers | grep -v WARNING && deactivate"
