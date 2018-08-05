@@ -72,6 +72,8 @@ rally_tempest_swift_reseller_admin_role: admin
 tempest_test_flavor: m1.tiny
 tempest_second_test_flavor: m1.small
 
+tempest_cirros_download_url: "http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img"
+
 tempest_ipv6_support: False
 
 # For some reason this is empty if not explicity set
