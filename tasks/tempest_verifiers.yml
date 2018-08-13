@@ -88,8 +88,9 @@
   - name: Cron - Configure cronjob for deployment {{ item.key }}
     cron:
       name: "Run rally"
+      user: rally
       hour: "{{ tempest_cron_run_hour }}"
-      job: "bash /home/rally//{{ item.key }}-tempest_run.sh --tag 'CRON_$(date +%Y_%m_%d_%H)'"
+      job: "bash /home/rally/{{ item.key }}-tempest_run.sh --tag 'CRON_$(date +%Y_%m_%d_%H)'"
     when: "configure_tempest_cron and {{ item.key not in ['cpouta-prod', 'epouta-prod'] }}"
     with_items:
       - {{ clouds_devtest }}
