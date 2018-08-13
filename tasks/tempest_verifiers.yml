@@ -84,7 +84,7 @@
       name: "Run tempest against {{ item.key }}"
       user: rally
       hour: "{{ item.value.tempest_cron_run_hour }}"
-      job: "bash /home/rally/{{ item.key }}-tempest_run.sh --tag 'CRON_$(date +%Y_%m_%d_%H)'"
+      job: "bash /home/rally/{{ item.key }}-tempest_run.sh --tag \"CRON_$(date +%Y_%m_%d_%H)\""
     when: item.value.configure_tempest_cron
 
   become_user: rally
