@@ -79,21 +79,13 @@
   - name: Template in tempest run bash script
     template: src=tempest_run.sh.j2 dest=/home/rally//{{ item.key }}-tempest_run.sh owner=rally group=rally mode=0700
 
-  - name: Cron - Exclude production environments
-    set_fact:
-      clouds_devtest: "{{ clouds_devtest | combine({item.key: item.value}) }}"
-    when: "configure_tempest_cron and {{ item.key not in ['cpouta-prod', 'epouta-prod'] }}"
-    with_dict: "{{ clouds }}"
-
-  - name: "Cron - Configure cronjob for deployment {{ item.key }}"
+  - name: "Configure cronjob for deployment {{ item.key }}"
     cron:
-      name: "Run rally"
+      name: "Run tempest against {{ item.key }}"
       user: rally
-      hour: "{{ tempest_cron_run_hour }}"
+      hour: "{{ item.value.tempest_cron_run_hour }}"
       job: "bash /home/rally/{{ item.key }}-tempest_run.sh --tag 'CRON_$(date +%Y_%m_%d_%H)'"
-    when: "configure_tempest_cron and {{ item.key not in ['cpouta-prod', 'epouta-prod'] }}"
-    with_items:
-      - "{{ clouds_devtest }}"
+    when: item.value.configure_tempest_cron
 
   become_user: rally
   environment:
