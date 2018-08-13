@@ -85,7 +85,7 @@
     when: "configure_tempest_cron and {{ item.key not in ['cpouta-prod', 'epouta-prod'] }}"
     with_dict: "{{ clouds }}"
 
-  - name: Cron - Configure cronjob for deployment {{ item.key }}
+  - name: "Cron - Configure cronjob for deployment {{ item.key }}"
     cron:
       name: "Run rally"
       user: rally
@@ -93,7 +93,7 @@
       job: "bash /home/rally/{{ item.key }}-tempest_run.sh --tag 'CRON_$(date +%Y_%m_%d_%H)'"
     when: "configure_tempest_cron and {{ item.key not in ['cpouta-prod', 'epouta-prod'] }}"
     with_items:
-      - {{ clouds_devtest }}
+      - "{{ clouds_devtest }}"
 
   become_user: rally
   environment:
