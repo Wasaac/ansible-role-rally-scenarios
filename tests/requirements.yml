@@ -2,4 +2,4 @@
 
 - src: https://github.com/CSCfi/ansible-role-rally
   scm: git
-  version: FIX-20180821-rally2
+  version: master
