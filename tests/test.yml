@@ -13,6 +13,7 @@
        - "mysetting = False"
        - "[section1]"
        - "setting2 = True"
+     - rally_install_version: 'stable/0.12'
      - clouds:
         testcloud:
           region: region1
