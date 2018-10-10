@@ -21,7 +21,7 @@
 
 - block:
   - name: Check for cirros images
-    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros && deactivate"
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && openstack image list --public -f value -c Name |grep cirros$ && deactivate"
     register: existing_images
     failed_when: existing_images.rc  > 1
     changed_when: False
@@ -36,7 +36,7 @@
       executable: /bin/bash
 
   - name: Get image id
-    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && glance image-list --visibility public |grep cirros | cut -f 2 -d  '|' | head -n 1 && deactivate"
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && source ~/.rally/openrc && openstack image list --public -f value -c Name -c ID | grep cirros$ | cut -f 1 -d ' ' | head -n 1 && deactivate"
     register: image_id
     changed_when: False
     args:
