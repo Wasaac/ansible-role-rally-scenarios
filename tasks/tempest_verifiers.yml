@@ -68,7 +68,7 @@
     register: reg_tempest_config
 
   - name: Configure rally verifier if templating in the templest config file task changed
-    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify use-verifier --id {{ item.key }} &&  rally verify configure-verifier --override /tmp/{{ item.key }}.tempest && deactivate"
+    shell: "source /home/rally/rally/bin/activate && rally deployment use {{ item.key }} &>/dev/null && rally verify use-verifier --id {{ item.key }} &&  rally verify configure-verifier --extend /tmp/{{ item.key }}.tempest && deactivate"
     args:
       executable: /bin/bash
     when: reg_tempest_config.changed
