@@ -94,8 +94,12 @@ tempest_ca_path: "/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt"
 # Set to True for the bash script to exit if we are not in a screen
 tempest_must_be_run_in_screen: False
 
+# How many threads to run. If not set, defaults to amount of CPUs.
+concurrency: 1
+
 # A way to add more settings:
 #rally_tempest_extra_settings:
 # - "mysetting = False"
 # - "[section1]"
 # - "setting2 = True"
+
