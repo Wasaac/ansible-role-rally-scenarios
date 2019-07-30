@@ -13,7 +13,7 @@
        - "mysetting = False"
        - "[section1]"
        - "setting2 = True"
-     - rally_install_version: 'stable/0.12'
+     - rally_install_version: '1.6.0'
      - tempest_manual_forloop_cleanup: True
      - clouds:
         testcloud:
