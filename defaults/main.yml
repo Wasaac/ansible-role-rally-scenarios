@@ -103,3 +103,7 @@ concurrency: 1
 # - "[section1]"
 # - "setting2 = True"
 
+# Git clone rally-openstack because the sample scenarios are there and they are nice to have
+rally_openstack_gitrepo_source: https://github.com/openstack/rally-openstack
+rally_openstack_gitrepo_dest: /opt/rally/rally-openstack
+#rally_openstack_gitrepo_version: "master"

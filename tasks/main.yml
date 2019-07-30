@@ -44,3 +44,9 @@
 
 - import_tasks: tempest.yml
   when: configure_tempest
+
+- name: Create directories for deployments
+  file: path={{rally_openstack_gitrepo_dest|dirname}} owner=rally group=rally mode=0750 state=directory
+
+- name: clone openstack/rally-openstack to get the samples directory - useful for tasks
+  git: repo="{{ rally_openstack_gitrepo_source }}" dest="{{ rally_openstack_gitrepo_dest }}" version="{{ rally_openstack_gitrepo_version|default(omit) }}"
