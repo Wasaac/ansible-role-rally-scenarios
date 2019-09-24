@@ -76,6 +76,9 @@ tempest_second_test_flavor: m1.small
 
 tempest_ipv6_support: False
 
+# Volume size for tempest test
+tempest_volume_size: 1
+
 # For some reason this is empty if not explicity set
 tempest_ca_path: "/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt"
 
