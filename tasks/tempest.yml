@@ -3,6 +3,7 @@
   get_url:
     url: "{{ tempest_cirros_download_url }}"
     dest: "/tmp/cirros-0.3.5-x86_64-disk.img"
+    validate_certs: no
 
 - include_tasks: tempest_verifiers.yml
   with_dict: "{{ clouds }}"
