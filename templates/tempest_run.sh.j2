@@ -1,7 +1,11 @@
 #!/bin/bash
 # We want any image fetches to use the possible proxy, but all OpenStack
-# communication should not use the proxy 
+# communication should not use the proxy
+{% if proxy_env is defined %}
 export http_proxy={{ proxy_env["http_proxy"] | default('') }}
+{% else %}
+export http_proxy=''
+{% endif %}
 unset https_proxy
 
 {% if tempest_must_be_run_in_screen %}
