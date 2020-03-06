@@ -8,6 +8,8 @@ clouds: {}
 #  testcloud:
 #    region: region1
 #    endpoint: testcloud.fi:5000/v2.0/
+#    https_insecure: false
+#    https_cacert: "{{ tempest_ca_path }}"
 #    adminuser: admin
 #    adminpassword: "{{ vault_test_adminpw }}"
 #    admin_project_name: adminproject

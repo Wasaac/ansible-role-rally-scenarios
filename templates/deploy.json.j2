@@ -3,6 +3,8 @@
         "auth_url": "https://{{ item.value.endpoint }}",
         "region_name": "{{ item.value.region }}",
         "endpoint_type": "public",
+        "https_insecure": {{ item.value.https_insecure }},
+        "https_cacert": "{{ item.value.https_cacert }}",
         "admin": {
             "username": "{{ item.value.adminuser }}",
             "password": "{{ item.value.adminpassword }}",
