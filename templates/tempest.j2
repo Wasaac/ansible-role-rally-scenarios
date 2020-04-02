@@ -7,7 +7,9 @@ image_ref = {{ tempest_cirros_image_uuid }}
 image_ref_alt = {{ tempest_cirros_image_uuid }}
 flavor_ref = {{ tempest_flavor_uuid }}
 flavor_ref_alt = {{ tempest_second_flavor_uuid }}
+{% if tempest_network_name is defined %}
 fixed_network_name = {{ tempest_network_name }}
+{% endif %}
 
 [object-storage]
 swift_operator_role = {{ rally_tempest_swift_operator_role }}

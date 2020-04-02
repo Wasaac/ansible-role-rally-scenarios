@@ -61,7 +61,9 @@
       tempest_cirros_image_uuid: "{{ image_id.stdout }}"
       tempest_flavor_uuid: "{{ flavor_id.stdout }}"
       tempest_second_flavor_uuid: "{{ second_flavor_id.stdout }}"
+  - name: Set tempest network name if provided
       tempest_network_name: "{{ item.value.network_name }}"
+    when: item.value.network_name is defined
 
   - name: store tempest configs in a persistent place
     file:
