@@ -11,44 +11,25 @@ clouds: {}
 #    https_insecure: false
 #    https_cacert: "{{ tempest_ca_path }}"
 #    adminuser: admin
-#    adminpassword: "{{ vault_test_adminpw }}"
+#    adminpassword: "{{ secrets_admin_password }}"
 #    admin_project_name: adminproject
 #    admin_domain_name: Default
 #    admin_project_domain_name: Default
-#    username: user
-#    userpassword: "{{ vault_test_userpw }}"
-#    user_project_name: userproject
-#    user_domain_name: Default
-#    user_project_domain_name: Default
+#    users:
+#      - name: rally-user-1
+#        password: "{{ secrets_rally_1_password }}"
+#        project_name: rally-test-project-1
+#        domain_name: Default
+#        project_domain_name: Default
+#      - name: rally-user-2
+#        password: "{{ secrets_rally_2_password }}"
+#        project_name: rally-test-project-2
+#        domain_name: Default
+#        project_domain_name: Default
 #    network_name: network_name_for_tempest
 #    tempest_extra_settings: []
 #    tempest_skip_tests: {}
 #    tempest_manual_forloop_cleanup: True
-# Which tempest tests to skip
-# Moving this under the clouds dictionary so you can have a skip test
-# per env, as Dev and Test may not have the same amount of hardware to
-# run some of the tempest tests against as in a Prod.
-# Example: skip a single test
-#     tempest_skip_tests: { tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,volume]: "Disabled due to reasons" }
-
-#
-#  prodcloud:
-#    region: region1
-#    endpoint: prodcloud.fi:5000/v2.0/
-#    adminuser: admin
-#    adminpassword: "{{ vault_prod_adminpw }}"
-#    admin_project_name: adminproject
-#    admin_domain_name: Default
-#    admin_project_domain_name: Default
-#    username: user
-#    userpassword: "{{ vault_prod_userpw }}"
-#    user_project_name: userproject
-#    user_domain_name: Default
-#    user_project_domain_name: Default
-#    network_name: netowork_name_for_tempest
-#    tempest_extra_settings: "{{ rally_tempest_extra_settings }}"
-#    tempest_skip_tests: {}
-#    tempest_manual_forloop_cleanup: False
 # Which tempest tests to skip
 # Moving this under the clouds dictionary so you can have a skip test
 # per env, as Dev and Test may not have the same amount of hardware to

@@ -5,6 +5,7 @@
         "endpoint_type": "public",
         "https_insecure": {{ item.value.https_insecure }},
         "https_cacert": "{{ item.value.https_cacert }}",
+{%- if item.value.adminuser is defined -%}
         "admin": {
             "username": "{{ item.value.adminuser }}",
             "password": "{{ item.value.adminpassword }}",
@@ -12,14 +13,17 @@
             "user_domain_name": "{{ item.value.admin_domain_name }}",
             "project_domain_name": "{{ item.value.admin_project_domain_name }}"
         },
+{%- endif -%}
         "users": [
+{% for user in item.value.users %}
             {
-                "username": "{{ item.value.username }}",
-                "password": "{{ item.value.userpassword }}",
-                "project_name": "{{ item.value.user_project_name }}",
-                "user_domain_name": "{{ item.value.user_domain_name }}",
-                "project_domain_name": "{{ item.value.user_project_domain_name }}"
-            }
+                "username": "{{ user.name }}",
+                "password": "{{ user.password }}",
+                "project_name": "{{ user.project_name }}",
+                "user_domain_name": "{{ user.domain_name }}",
+                "project_domain_name": "{{ user.project_domain_name }}"
+            }{{ "," if not loop.last else "" }}
+{% endfor %}
         ]
     }
 }
